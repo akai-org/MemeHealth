@@ -17,7 +17,7 @@ export default nc().get(async (req, res) => {
           .map((v) => v.match(/src="([^"]*)"/)[1]);
         await Promise.allSettled(result.map(saveImage));
       }
-      return res.status(201).end();
+      return res.status(201).send("ok");
     }
     res.status(400).end("invalid url");
   } catch (error) {

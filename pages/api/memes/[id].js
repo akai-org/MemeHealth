@@ -11,9 +11,5 @@ export default nc().get(async (req, res) => {
   if (!result) {
     return res.status(404).end();
   }
-  const response = await axios.get(result.url, {
-    responseType: "arraybuffer",
-  });
-  res.setHeader("Content-Type", response.headers["content-type"]);
-  res.send(response.data);
+  return res.redirect(result.url);
 });
