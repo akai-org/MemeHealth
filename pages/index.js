@@ -1,3 +1,5 @@
+/* eslint @next/next/no-img-element:"off" */
+
 import { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useLocalStorage } from "react-use";
@@ -13,7 +15,7 @@ export default function Home() {
         left: score.left + left,
         right: score.right + right,
       }));
-      setDate(Date.now());
+      setDate((v) => v + 10);
     },
     [score.left, score.right, setScore]
   );
@@ -52,7 +54,11 @@ export default function Home() {
       <button data-left onClick={() => updateScore({ left: 1 })}>
         <BsChevronCompactLeft />
       </button>
-      <img src={`/api/memes?ts=${date}`} alt="img" layout="fill" />
+      <img src={`/api/memes?ts=${date}`} alt="img" />
+      <link rel="prefetch" href={`/api/memes?ts=${date + 10}`} />
+      <link rel="prefetch" href={`/api/memes?ts=${date + 20}`} />
+      <link rel="prefetch" href={`/api/memes?ts=${date + 30}`} />
+      <link rel="prefetch" href={`/api/memes?ts=${date + 40}`} />
       <button data-right onClick={() => updateScore({ right: 1 })}>
         <BsChevronCompactRight />
       </button>
