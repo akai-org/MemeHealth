@@ -3,12 +3,12 @@
 import { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useLocalStorage } from "react-use";
+import { useSwipeable } from "react-swipeable";
 import { scoreInfo } from "../utils/scoreInfo";
 
 export default function Home() {
   const [date, setDate] = useState(() => Date.now());
   const [score, setScore] = useLocalStorage("score", { left: 0, right: 0 });
-
   const updateScore = useCallback(
     ({ left = 0, right = 0 }) => {
       setScore(() => ({
@@ -19,6 +19,11 @@ export default function Home() {
     },
     [score.left, score.right, setScore]
   );
+  const handlers = useSwipeable({
+    onSwipedRight: () => updateScore({ right: 1 }),
+    onSwipedLeft: () => updateScore({ left: 1 }),
+    delta: 100,
+  });
 
   useEffect(() => {
     const change = (e) => {
@@ -44,13 +49,9 @@ export default function Home() {
   }, [score]);
 
   console.log("score :>> ", score);
+
   return (
-    <div
-      id="container"
-      onKeyDown={(e) => {
-        console.log(e);
-      }}
-    >
+    <div id="container" {...handlers}>
       <button data-left onClick={() => updateScore({ left: 1 })}>
         <BsChevronCompactLeft />
       </button>
