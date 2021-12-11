@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useLocalStorage } from "react-use";
+import { scoreInfo } from "../utils/scoreInfo";
 
 export default function Home() {
   const [date, setDate] = useState(() => Date.now());
@@ -32,6 +32,14 @@ export default function Home() {
       window.removeEventListener("keydown", change);
     };
   }, [updateScore]);
+
+  useEffect(() => {
+    const sum = score.right - score.left;
+    const mess = scoreInfo[sum];
+    if (mess) {
+      window.alert(mess);
+    }
+  }, [score]);
 
   console.log("score :>> ", score);
   return (
