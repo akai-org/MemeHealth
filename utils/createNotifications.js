@@ -10,6 +10,6 @@ export const createNotifications = async () => {
     headings: { en: "Memes Health" },
     contents: { en: "-> Look at this meme <-" },
     include_player_ids: result.map(({ userId }) => userId),
-    url: process.env.NEXT_PUBLIC_VERCEL_URL,
+    url: process.env.WEB_URL,
   });
 };
