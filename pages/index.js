@@ -6,6 +6,7 @@ import { useLocalStorage } from "react-use";
 import { useSwipeable } from "react-swipeable";
 import { useSnackbar } from "notistack";
 import { scoreInfo } from "../utils/scoreInfo";
+import { createNotifications } from "../utils/createNotifications";
 
 export default function Home() {
   const [date, setDate] = useState(() => Date.now());
@@ -69,3 +70,11 @@ export default function Home() {
     </div>
   );
 }
+
+export const getStaticProps = async (ctx) => {
+  await createNotifications();
+  return {
+    props: {},
+    revalidate: 60 * 60 * 3, //3h
+  };
+};

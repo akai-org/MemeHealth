@@ -12,3 +12,9 @@ model memes {
   url       String   @unique
   createdAt DateTime @default(now())
 }
+
+model notifications {
+  id        Int      @id @default(autoincrement())
+  userId    String   @unique @db.Uuid
+  createdAt DateTime @default(now())
+}
