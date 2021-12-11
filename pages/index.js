@@ -4,11 +4,13 @@ import { useState, useEffect, useCallback } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { useLocalStorage } from "react-use";
 import { useSwipeable } from "react-swipeable";
+import { useSnackbar } from "notistack";
 import { scoreInfo } from "../utils/scoreInfo";
 
 export default function Home() {
   const [date, setDate] = useState(() => Date.now());
   const [score, setScore] = useLocalStorage("score", { left: 0, right: 0 });
+  const { enqueueSnackbar } = useSnackbar();
   const updateScore = useCallback(
     ({ left = 0, right = 0 }) => {
       setScore(() => ({
@@ -40,13 +42,14 @@ export default function Home() {
     };
   }, [updateScore]);
 
+  const sum = score.right - score.left;
+
   useEffect(() => {
-    const sum = score.right - score.left;
     const mess = scoreInfo[sum];
     if (mess) {
-      window.alert(mess);
+      enqueueSnackbar(mess, { variant: "info" });
     }
-  }, [score]);
+  }, [sum, enqueueSnackbar]);
 
   console.log("score :>> ", score);
 
